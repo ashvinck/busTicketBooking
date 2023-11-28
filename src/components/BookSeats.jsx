@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import { bookedData } from '../data/seatData';
 import SeatInfo from './SeatInfo';
 
-const Seat = ({ seatNumber, onClick, isSelected, bookedData }) => {
+const Seat = ({ seatNumber, onClick, isSelected, bookedData, price }) => {
   // Find the booking information for the current seat number
   const bookingInfo = bookedData.find(
     (booking) => booking.seatNo === seatNumber
@@ -38,6 +38,7 @@ const Seat = ({ seatNumber, onClick, isSelected, bookedData }) => {
       <Typography variant='subtitle1' sx={{ fontWeight: 'bold' }}>
         Seat {seatNumber}
       </Typography>
+      <Typography variant='subtitle1'>&#8377;{price}</Typography>
       <Typography variant='body1'>
         {isReservedForWomen ? 'Reserved for Women' : 'General Public'}
       </Typography>
@@ -89,7 +90,7 @@ const Seat = ({ seatNumber, onClick, isSelected, bookedData }) => {
   );
 };
 
-const BerthLayout = ({ title, onSelect, selectedSeats }) => {
+const BerthLayout = ({ title, onSelect, selectedSeats, price }) => {
   const seatPrefix = title === 'Lower Berth' ? 'L' : 'U';
   const numofRows = 5;
 
@@ -132,6 +133,7 @@ const BerthLayout = ({ title, onSelect, selectedSeats }) => {
                     calculateSeatNumber(rowIndex, seatIndex)
                   )}
                   bookedData={bookedData}
+                  price={price}
                 />
               </Box>
             ))}
@@ -167,11 +169,13 @@ const BookSeats = () => {
           title='Lower Berth'
           onSelect={handleSeatClick}
           selectedSeats={selectedSeats}
+          price={ticketPrice}
         />
         <BerthLayout
           title='Upper Berth'
           onSelect={handleSeatClick}
           selectedSeats={selectedSeats}
+          price={ticketPrice}
         />
         <SeatInfo />
       </Box>
